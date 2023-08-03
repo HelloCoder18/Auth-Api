@@ -22,9 +22,9 @@ class AddPokemon(APIView):
         return Response({"msg":"Pokemon added"})
         
 class RemovePokemon(APIView):  
-    def delete(self,request,id,format=None):
-        print(request.data,id)
-        res = Pokemondata.objects.filter(id=id)
+    def delete(self,request,name,format=None):
+        print(request.data,name)
+        res = Pokemondata.objects.filter(name=name).first()
         if res:
             res.delete()
             return Response({"msg":"Pokemon deleted"})
@@ -35,8 +35,9 @@ class FindPokemon(APIView):
     def get(self,request,name,format=None):
         print(name)
         res = Pokemondata.objects.filter(name=name).first()
-        if res is not None:
-            return Response({"msg":"Here is info about {{res.name}}","data":res})
+        res = PokeSerializer(res).data
+        if res is not None and res["name"] !="":
+            return Response({"msg":f"Here is info about {name}","data":res})
         else:
             return Response({"msg":f"Not found {name}"})
 

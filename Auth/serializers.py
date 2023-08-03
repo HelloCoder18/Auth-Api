@@ -5,5 +5,5 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('first_name','last_name', 'password','username','email')
 
-        def set_password(self, password):
-            self.password = self.set_password(password)
+        # def set_password(self, password):
+        #     self.password = self.set_password(password)

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'Auth',
-    'Pokemon'
+    'Pokemon',
+    'Recipes'
 ]
 
 REST_FRAMEWORK = {
@@ -86,11 +88,16 @@ WSGI_APPLICATION = 'Authapi.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'UserDB',
-        'USER': 'postgres',
-        'PASSWORD': 'super',
-        ' HOST': 'localhost',
-        'PORT': '5432',
+       'NAME':os.environ.get('POSTGRES_DB'),
+       'USER':os.environ.get('POSTGRES_USER'),
+        'PASSWORD':os.environ.get('POSTGRES_PASSWORD'),
+       'HOST':'db',
+       'PORT':'5432',
+        # 'NAME': 'UserDB',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'super',
+        # ' HOST': 'localhost',
+        # 'PORT': '5432',
     }
 }
 
@@ -140,7 +147,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Simple jwt 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=2),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
